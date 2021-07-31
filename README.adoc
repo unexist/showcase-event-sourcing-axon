@@ -1,0 +1,3 @@
+= Showcase for event sourcing based on axon
+
+This project holds a showcase for event sourcing based on Axon
