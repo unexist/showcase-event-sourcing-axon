@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+  # Install axon
+  axon:
+    container_name: axon
+    image: axoniq/axonserver
+    ports:
+      - 8024:8024
