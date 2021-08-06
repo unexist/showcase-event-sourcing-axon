@@ -6,4 +6,6 @@ services:
     container_name: axon
     image: axoniq/axonserver
     ports:
-      - 8024:8024
+    - "8024:8024"
+    - "8124:8124"
+    - "8224:8224"
