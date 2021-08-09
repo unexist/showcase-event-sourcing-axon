@@ -1,3 +1,8 @@
 = Showcase for event sourcing based on axon
 
 This project holds a showcase for event sourcing based on Axon
+
+== Links
+
+- https://axoniq.io/blog-overview/running-axon-server-in-docker
+- https://www.baeldung.com/spring-component-scanning
