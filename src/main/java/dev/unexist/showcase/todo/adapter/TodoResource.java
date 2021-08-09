@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +37,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/todo")
 public class TodoResource {
 
     @Autowired
@@ -50,7 +48,7 @@ public class TodoResource {
             @ApiResponse(responseCode = "406", description = "Bad data"),
             @ApiResponse(responseCode = "500", description = "Server error")
     })
-    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(value = "/todo", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity create(@RequestBody TodoBase base) {
         ResponseEntity response;
@@ -71,7 +69,7 @@ public class TodoResource {
             @ApiResponse(responseCode = "204", description = "Nothing found"),
             @ApiResponse(responseCode = "500", description = "Server error")
     })
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/todo", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Todo>> getAll() {
         List<Todo> todoList = this.todoService.getAll();
 
@@ -93,7 +91,7 @@ public class TodoResource {
             @ApiResponse(responseCode = "404", description = "Todo not found"),
             @ApiResponse(responseCode = "500", description = "Server error")
     })
-    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/todo/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Todo> findById(@Parameter(description = "Todo id")
                                              @RequestParam("id") int id) {
         Optional<Todo> result = this.todoService.findById(id);
@@ -115,7 +113,7 @@ public class TodoResource {
             @ApiResponse(responseCode = "404", description = "Todo not found"),
             @ApiResponse(responseCode = "500", description = "Server error")
     })
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PutMapping(value = "/todo/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity update(@Parameter(description = "Todo id")
                                      @RequestParam("id") int id, @RequestBody TodoBase base) {
@@ -131,7 +129,7 @@ public class TodoResource {
     }
 
     @Operation(summary = "Delete todo by id")
-    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @DeleteMapping(value = "/todo/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity delete(@Parameter(description = "Todo id") @RequestParam("id") int id) {
         ResponseEntity response;
