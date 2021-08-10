@@ -2,6 +2,10 @@
 
 This project holds a showcase for event sourcing based on Axon
 
+== Problems
+
+@RequestBody must be `org.springframework.web.bind.annotation.RequestBody`
+
 == Links
 
 - https://axoniq.io/blog-overview/running-axon-server-in-docker
