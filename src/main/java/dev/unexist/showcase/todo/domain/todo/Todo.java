@@ -11,7 +11,23 @@
 
 package dev.unexist.showcase.todo.domain.todo;
 
+import dev.unexist.showcase.todo.domain.todo.commands.CreateCommand;
+import dev.unexist.showcase.todo.domain.todo.commands.DoneCommand;
+import dev.unexist.showcase.todo.domain.todo.events.CreatedEvent;
+import dev.unexist.showcase.todo.domain.todo.events.DoneEvent;
+import org.axonframework.commandhandling.CommandHandler;
+import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.modelling.command.AggregateLifecycle;
+import org.axonframework.spring.stereotype.Aggregate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Aggregate
 public class Todo extends TodoBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreateCommand.class);
+
+    @AggregateIdentifier
     private int id;
 
     /**
@@ -20,7 +36,6 @@ public class Todo extends TodoBase {
 
     public Todo() {
     }
-
 
     /**
      * Constructor
@@ -31,6 +46,66 @@ public class Todo extends TodoBase {
 
     public Todo(final TodoBase base) {
         this.update(base);
+    }
+
+    /**
+     * Command handler for the {@link CreateCommand}
+     *
+     * @param cmd
+     *          {@link CreateCommand} to handle
+     **/
+
+    @CommandHandler
+    public Todo(CreateCommand cmd) {
+        LOGGER.info("Handle create command");
+
+        AggregateLifecycle.apply(new CreatedEvent(cmd.getId(),
+                cmd.getTitle(), cmd.getDescription()));
+    }
+
+    /**
+     * Command handler for the {@link DoneCommand}
+     *
+     * @param cmd
+     *          {@link DoneCommand} to handle
+     **/
+
+    @CommandHandler
+    public void handle(DoneCommand cmd) {
+        LOGGER.info("Handle done command");
+
+        AggregateLifecycle.apply(new DoneEvent(cmd.getId()));
+    }
+
+    /**
+     * Event handler for the {@link CreatedEvent}
+     *
+     * @param evt
+     *          {@link CreatedEvent} to handle
+     **/
+
+    @EventSourcingHandler
+    public void on(CreatedEvent evt) {
+        LOGGER.info("Handle created event");
+
+        this.setId(evt.getId());
+        this.setTitle(evt.getTitle());
+        this.setDescription(evt.getDescription());
+    }
+
+    /**
+     * Event handler for the {@link DoneEvent}
+     *
+     * @param evt
+     *          {@link DoneEvent} to handle
+     **/
+
+    @EventSourcingHandler
+    public void on(DoneEvent evt) {
+        LOGGER.info("Handle done event");
+
+        this.setId(evt.getId());
+        this.setDone(true);
     }
 
     /**
