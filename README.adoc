@@ -6,6 +6,10 @@ This project holds a showcase for event sourcing based on Axon
 
 @RequestBody must be `org.springframework.web.bind.annotation.RequestBody`
 
+```log
+OUT_OF_RANGE: [AXONIQ-2000] Invalid sequence number 0 for aggregate 0, expected 1
+```
+
 == Links
 
 - https://axoniq.io/blog-overview/running-axon-server-in-docker
