@@ -15,6 +15,7 @@ import dev.unexist.showcase.todo.domain.todo.Todo;
 import dev.unexist.showcase.todo.domain.todo.TodoBase;
 import dev.unexist.showcase.todo.domain.todo.commands.CreateCommand;
 import dev.unexist.showcase.todo.domain.todo.queries.FindAllQuery;
+import dev.unexist.showcase.todo.domain.todo.queries.FindByIdQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -38,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -81,9 +83,10 @@ public class TodoResource {
             @ApiResponse(responseCode = "500", description = "Server error")
     })
     @GetMapping(value = "/todo/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity findById(@Parameter(description = "Todo id")
+    public CompletableFuture<Optional<Todo>> findById(@Parameter(description = "Todo id")
                                              @RequestParam("id") int id) {
-        return ResponseEntity.status(HttpStatus.GONE).build();
+        return this.queryGateway.query(new FindByIdQuery(id),
+                ResponseTypes.optionalInstanceOf(Todo.class));
     }
 
     @Operation(summary = "Update todo by id")
