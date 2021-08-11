@@ -38,10 +38,10 @@ public class Todo extends TodoBase {
     }
 
     /**
+     *
      * Constructor
      *
-     * @param base
-     *          Base entry
+     * @param  base  Base entry
      **/
 
     public Todo(final TodoBase base) {
@@ -51,68 +51,63 @@ public class Todo extends TodoBase {
     /**
      * Command handler for the {@link CreateCommand}
      *
-     * @param cmd
-     *          {@link CreateCommand} to handle
+     * @param  command  {@link CreateCommand} to handle
      **/
 
     @CommandHandler
-    public Todo(CreateCommand cmd) {
+    public Todo(CreateCommand command) {
         LOGGER.info("Handle aggregate create command");
 
-        AggregateLifecycle.apply(new CreatedEvent(cmd.getId(),
-                cmd.getTitle(), cmd.getDescription()));
+        AggregateLifecycle.apply(new CreatedEvent(command.getId(),
+                command.getTitle(), command.getDescription()));
     }
 
     /**
      * Command handler for the {@link DoneCommand}
      *
-     * @param cmd
-     *          {@link DoneCommand} to handle
+     * @param  command  {@link DoneCommand} to handle
      **/
 
     @CommandHandler
-    public void handle(DoneCommand cmd) {
+    public void handle(DoneCommand command) {
         LOGGER.info("Handle aggregate done command");
 
-        AggregateLifecycle.apply(new DoneEvent(cmd.getId()));
+        AggregateLifecycle.apply(new DoneEvent(command.getId()));
     }
 
     /**
      * Event handler for the {@link CreatedEvent}
      *
-     * @param evt
-     *          {@link CreatedEvent} to handle
+     * @param  event  {@link CreatedEvent} to handle
      **/
 
     @EventSourcingHandler
-    public void on(CreatedEvent evt) {
+    public void on(CreatedEvent event) {
         LOGGER.info("Handle aggregate created event");
 
-        this.setId(evt.getId());
-        this.setTitle(evt.getTitle());
-        this.setDescription(evt.getDescription());
+        this.setId(event.getId());
+        this.setTitle(event.getTitle());
+        this.setDescription(event.getDescription());
     }
 
     /**
      * Event handler for the {@link DoneEvent}
      *
-     * @param evt
-     *          {@link DoneEvent} to handle
+     * @param  event  {@link DoneEvent} to handle
      **/
 
     @EventSourcingHandler
-    public void on(DoneEvent evt) {
+    public void on(DoneEvent event) {
         LOGGER.info("Handle aggregate done event");
 
-        this.setId(evt.getId());
+        this.setId(event.getId());
         this.setDone(true);
     }
 
     /**
      * Update values from base
      *
-     * @param base
-     *          Todo base class
+     * @param  base  Todo base class
      **/
 
     public void update(final TodoBase base) {
@@ -125,8 +120,7 @@ public class Todo extends TodoBase {
     /**
      * Get id of entry
      *
-     * @return
-     *          Id of the entry
+     * @return Id of the entry
      **/
 
     public int getId() {
@@ -136,8 +130,7 @@ public class Todo extends TodoBase {
     /**
      * Set id of entry
      *
-     * @param id
-     *          Id of the entry
+     * @param  id  Id of the entry
      **/
 
     public void setId(int id) {

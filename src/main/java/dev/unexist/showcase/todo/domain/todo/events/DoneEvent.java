@@ -14,9 +14,21 @@ package dev.unexist.showcase.todo.domain.todo.events;
 public class DoneEvent {
     private int id;
 
+    /**
+     * Constructor
+     *
+     * @param  id  Id for this event
+     **/
+
     public DoneEvent(int id) {
         this.id = id;
     }
+
+    /**
+     * Get id
+     *
+     * @return Id of this event
+     **/
 
     public int getId() {
         return id;

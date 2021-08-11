@@ -21,8 +21,16 @@ public class CreateCommand {
 
     @TargetAggregateIdentifier
     final int id;
+
     final String title;
     final String description;
+
+    /**
+     * Constructor
+     *
+     * @param  title        Title for this command
+     * @param  description  Description for this command
+     **/
 
     public CreateCommand(String title, String description) {
         ADDER.increment();
@@ -32,6 +40,12 @@ public class CreateCommand {
         this.description = description;
     }
 
+    /**
+     * Constructor
+     *
+     * @param  base  Init with values from a {@link TodoBase}
+     **/
+
     public CreateCommand(TodoBase base) {
         ADDER.increment();
 
@@ -40,13 +54,31 @@ public class CreateCommand {
         this.description = base.getDescription();
     }
 
+    /**
+     * Get id
+     *
+     * @return Id of this command
+     **/
+
     public int getId() {
         return id;
     }
 
+    /**
+     * Get title
+     *
+     * @return Title of this command
+     **/
+
     public String getTitle() {
         return title;
     }
+
+    /**
+     * Get description
+     *
+     * @return Description of this command
+     **/
 
     public String getDescription() {
         return description;

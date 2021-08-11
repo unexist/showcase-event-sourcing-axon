@@ -16,19 +16,45 @@ public class CreatedEvent {
     final String title;
     final String description;
 
+    /**
+     * Constructor
+     *
+     * @param  id           Id for this event
+     * @param  title        Title for this event
+     * @param  description  Description for this event
+     **/
+
     public CreatedEvent(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
     }
 
+    /**
+     * Get id
+     *
+     * @return Id of this event
+     **/
+
     public int getId() {
         return id;
     }
 
+    /**
+     * Get title
+     *
+     * @return Title of this event
+     **/
+
     public String getTitle() {
         return title;
     }
+
+    /**
+     * Get description
+     *
+     * @return Description of this event
+     **/
 
     public String getDescription() {
         return description;

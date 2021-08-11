@@ -34,29 +34,47 @@ public class TodoEventHandler {
 
     private final Map<Integer, Todo> todos = new HashMap<>();
 
+    /**
+     * Event handler for the event {@link CreatedEvent}
+     *
+     * @param  event  Event to handle
+     **/
+
     @EventHandler
-    public void on(CreatedEvent evt) {
+    public void on(CreatedEvent event) {
         LOGGER.info("Handle event handler created event");
 
         Todo todo = new Todo();
 
-        todo.setId(evt.getId());
-        todo.setTitle(evt.getTitle());
-        todo.setDescription(evt.getDescription());
+        todo.setId(event.getId());
+        todo.setTitle(event.getTitle());
+        todo.setDescription(event.getDescription());
 
-        todos.put(evt.getId(), todo);
+        todos.put(event.getId(), todo);
     }
 
+    /**
+     * Event handler for the event {@link DoneEvent}
+     *
+     * @param  event  Event to handle
+     **/
+
     @EventHandler
-    public void on(DoneEvent evt) {
+    public void on(DoneEvent event) {
         LOGGER.info("Handle event handler done event");
 
-        todos.computeIfPresent(evt.getId(), (id, todo) -> {
+        todos.computeIfPresent(event.getId(), (id, todo) -> {
             todo.setDone(true);
 
             return todo;
         });
     }
+
+    /**
+     * Query handler for the query {@link FindAllQuery}
+     *
+     * @param  query  Query to handle
+     **/
 
     @QueryHandler
     public List<Todo> handle(FindAllQuery query) {
@@ -64,6 +82,12 @@ public class TodoEventHandler {
 
         return new ArrayList<>(todos.values());
     }
+
+    /**
+     * Query handler for the query {@link FindByIdQuery}
+     *
+     * @param  query  Query to handle
+     **/
 
     @QueryHandler
     public Optional<Todo> handle(FindByIdQuery query) {

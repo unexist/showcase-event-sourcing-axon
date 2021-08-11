@@ -14,9 +14,21 @@ package dev.unexist.showcase.todo.domain.todo.queries;
 public class FindByIdQuery {
     private int id;
 
+    /**
+     * Constructor
+     *
+     * @param  id  Id to find
+     **/
+
     public FindByIdQuery(int id) {
         this.id = id;
     }
+
+    /**
+     * Get id
+     *
+     * @return Id to find
+     **/
 
     public int getId() {
         return id;

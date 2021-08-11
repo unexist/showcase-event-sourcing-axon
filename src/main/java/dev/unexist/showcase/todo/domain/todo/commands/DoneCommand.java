@@ -17,9 +17,21 @@ public class DoneCommand {
     @TargetAggregateIdentifier
     private final int id;
 
+    /**
+     * Constructor
+     *
+     * @param  id  Id for this command
+     **/
+
     public DoneCommand(int id) {
         this.id = id;
     }
+
+    /**
+     * Get id
+     *
+     * @return Id of this command
+     **/
 
     public int getId() {
         return id;
