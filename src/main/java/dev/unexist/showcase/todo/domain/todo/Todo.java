@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 @Aggregate
 public class Todo extends TodoBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CreateCommand.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Todo.class);
 
     @AggregateIdentifier
     private int id;
@@ -57,7 +57,7 @@ public class Todo extends TodoBase {
 
     @CommandHandler
     public Todo(CreateCommand cmd) {
-        LOGGER.info("Handle create command");
+        LOGGER.info("Handle aggregate create command");
 
         AggregateLifecycle.apply(new CreatedEvent(cmd.getId(),
                 cmd.getTitle(), cmd.getDescription()));
@@ -72,7 +72,7 @@ public class Todo extends TodoBase {
 
     @CommandHandler
     public void handle(DoneCommand cmd) {
-        LOGGER.info("Handle done command");
+        LOGGER.info("Handle aggregate done command");
 
         AggregateLifecycle.apply(new DoneEvent(cmd.getId()));
     }
@@ -86,7 +86,7 @@ public class Todo extends TodoBase {
 
     @EventSourcingHandler
     public void on(CreatedEvent evt) {
-        LOGGER.info("Handle created event");
+        LOGGER.info("Handle aggregate created event");
 
         this.setId(evt.getId());
         this.setTitle(evt.getTitle());
@@ -102,7 +102,7 @@ public class Todo extends TodoBase {
 
     @EventSourcingHandler
     public void on(DoneEvent evt) {
-        LOGGER.info("Handle done event");
+        LOGGER.info("Handle aggregate done event");
 
         this.setId(evt.getId());
         this.setDone(true);
