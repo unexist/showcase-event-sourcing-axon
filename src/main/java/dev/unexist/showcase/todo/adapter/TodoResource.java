@@ -13,7 +13,9 @@ package dev.unexist.showcase.todo.adapter;
 
 import dev.unexist.showcase.todo.domain.todo.Todo;
 import dev.unexist.showcase.todo.domain.todo.TodoBase;
+import dev.unexist.showcase.todo.domain.todo.TodoIdentifier;
 import dev.unexist.showcase.todo.domain.todo.commands.CreateCommand;
+import dev.unexist.showcase.todo.domain.todo.commands.DoneCommand;
 import dev.unexist.showcase.todo.domain.todo.queries.FindAllQuery;
 import dev.unexist.showcase.todo.domain.todo.queries.FindByIdQuery;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +34,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -84,9 +87,22 @@ public class TodoResource {
     })
     @GetMapping(value = "/todo/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CompletableFuture<Optional<Todo>> findById(@Parameter(description = "Todo id")
-                                             @RequestParam("id") int id) {
-        return this.queryGateway.query(new FindByIdQuery(id),
+                                             @PathVariable("id") String id) {
+        return this.queryGateway.query(new FindByIdQuery(new TodoIdentifier(id)),
                 ResponseTypes.optionalInstanceOf(Todo.class));
+    }
+
+    @Operation(summary = "Mark todo as done")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of todo", content =
+            @Content(array = @ArraySchema(schema = @Schema(implementation = Todo.class)))),
+            @ApiResponse(responseCode = "204", description = "Nothing found"),
+            @ApiResponse(responseCode = "500", description = "Server error")
+    })
+    @PutMapping(value = "/todo/{id}/done", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CompletableFuture<Void> markDone(@Parameter(description = "Todo id")
+                                                @PathVariable("id") String id) {
+        return this.commandGateway.send(new DoneCommand(new TodoIdentifier(id)));
     }
 
     @Operation(summary = "Update todo by id")
@@ -98,14 +114,14 @@ public class TodoResource {
     @PutMapping(value = "/todo/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity update(@Parameter(description = "Todo id")
-                                     @RequestParam("id") int id, @RequestBody TodoBase base) {
+                                     @PathVariable("id") String id, @RequestBody TodoBase base) {
         return ResponseEntity.status(HttpStatus.GONE).build();
     }
 
     @Operation(summary = "Delete todo by id")
     @DeleteMapping(value = "/todo/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity delete(@Parameter(description = "Todo id") @RequestParam("id") int id) {
+    public ResponseEntity delete(@Parameter(description = "Todo id") @RequestParam("id") String id) {
         return ResponseEntity.status(HttpStatus.GONE).build();
     }
 }
