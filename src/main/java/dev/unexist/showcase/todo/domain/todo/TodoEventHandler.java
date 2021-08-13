@@ -11,7 +11,6 @@
 
 package dev.unexist.showcase.todo.domain.todo;
 
-import dev.unexist.showcase.todo.domain.todo.commands.CreateCommand;
 import dev.unexist.showcase.todo.domain.todo.events.CreatedEvent;
 import dev.unexist.showcase.todo.domain.todo.events.DoneEvent;
 import dev.unexist.showcase.todo.domain.todo.queries.FindAllQuery;
@@ -30,9 +29,9 @@ import java.util.Optional;
 
 @Service
 public class TodoEventHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CreateCommand.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TodoEventHandler.class);
 
-    private final Map<Integer, Todo> todos = new HashMap<>();
+    private final Map<TodoIdentifier, Todo> todos = new HashMap<>();
 
     /**
      * Event handler for the event {@link CreatedEvent}

@@ -11,16 +11,18 @@
 
 package dev.unexist.showcase.todo.domain.todo.queries;
 
+import dev.unexist.showcase.todo.domain.todo.TodoIdentifier;
+
 public class FindByIdQuery {
-    private int id;
+    private TodoIdentifier id;
 
     /**
      * Constructor
      *
-     * @param  id  Id to find
+     * @param  id  {@link TodoIdentifier} to find
      **/
 
-    public FindByIdQuery(int id) {
+    public FindByIdQuery(TodoIdentifier id) {
         this.id = id;
     }
 
@@ -30,7 +32,7 @@ public class FindByIdQuery {
      * @return Id to find
      **/
 
-    public int getId() {
+    public TodoIdentifier getId() {
         return id;
     }
 }

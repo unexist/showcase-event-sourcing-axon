@@ -11,10 +11,12 @@
 
 package dev.unexist.showcase.todo.domain.todo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import dev.unexist.showcase.todo.domain.todo.commands.CreateCommand;
 import dev.unexist.showcase.todo.domain.todo.commands.DoneCommand;
 import dev.unexist.showcase.todo.domain.todo.events.CreatedEvent;
 import dev.unexist.showcase.todo.domain.todo.events.DoneEvent;
+import dev.unexist.showcase.todo.infrastructure.serializer.IdentifierSerializer;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -28,24 +30,14 @@ public class Todo extends TodoBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(Todo.class);
 
     @AggregateIdentifier
-    private int id;
+    @JsonSerialize(using = IdentifierSerializer.class)
+    private TodoIdentifier id;
 
     /**
      * Constructor
      **/
 
-    public Todo() {
-    }
-
-    /**
-     *
-     * Constructor
-     *
-     * @param  base  Base entry
-     **/
-
-    public Todo(final TodoBase base) {
-        this.update(base);
+    protected Todo() {
     }
 
     /**
@@ -105,26 +97,13 @@ public class Todo extends TodoBase {
     }
 
     /**
-     * Update values from base
-     *
-     * @param  base  Todo base class
-     **/
-
-    public void update(final TodoBase base) {
-        this.setDueDate(base.getDueDate());
-        this.setTitle(base.getTitle());
-        this.setDescription(base.getDescription());
-        this.setDone(base.getDone());
-    }
-
-    /**
      * Get id of entry
      *
      * @return Id of the entry
      **/
 
-    public int getId() {
-        return id;
+    public TodoIdentifier getId() {
+        return this.id;
     }
 
     /**
@@ -133,7 +112,7 @@ public class Todo extends TodoBase {
      * @param  id  Id of the entry
      **/
 
-    public void setId(int id) {
+    public void setId(TodoIdentifier id) {
         this.id = id;
     }
 }

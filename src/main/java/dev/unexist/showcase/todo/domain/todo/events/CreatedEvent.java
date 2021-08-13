@@ -11,20 +11,22 @@
 
 package dev.unexist.showcase.todo.domain.todo.events;
 
+import dev.unexist.showcase.todo.domain.todo.TodoIdentifier;
+
 public class CreatedEvent {
-    final int id;
+    final TodoIdentifier id;
     final String title;
     final String description;
 
     /**
      * Constructor
      *
-     * @param  id           Id for this event
+     * @param  id           {@link TodoIdentifier} for this event
      * @param  title        Title for this event
      * @param  description  Description for this event
      **/
 
-    public CreatedEvent(int id, String title, String description) {
+    public CreatedEvent(TodoIdentifier id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -36,7 +38,7 @@ public class CreatedEvent {
      * @return Id of this event
      **/
 
-    public int getId() {
+    public TodoIdentifier getId() {
         return id;
     }
 

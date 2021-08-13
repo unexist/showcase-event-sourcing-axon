@@ -12,15 +12,16 @@
 package dev.unexist.showcase.todo.domain.todo.commands;
 
 import dev.unexist.showcase.todo.domain.todo.TodoBase;
+import dev.unexist.showcase.todo.domain.todo.TodoIdentifier;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
-
-import java.util.concurrent.atomic.LongAdder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CreateCommand {
-    static final LongAdder ADDER = new LongAdder();
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreateCommand.class);
 
     @TargetAggregateIdentifier
-    final int id;
+    final TodoIdentifier id;
 
     final String title;
     final String description;
@@ -33,11 +34,11 @@ public class CreateCommand {
      **/
 
     public CreateCommand(String title, String description) {
-        ADDER.increment();
-
-        this.id = ADDER.intValue();
+        this.id = TodoIdentifier.nextId();
         this.title = title;
         this.description = description;
+
+        LOGGER.info("Create command id={}", this.getId());
     }
 
     /**
@@ -47,11 +48,11 @@ public class CreateCommand {
      **/
 
     public CreateCommand(TodoBase base) {
-        ADDER.increment();
-
-        this.id = ADDER.intValue();
+        this.id = TodoIdentifier.nextId();
         this.title = base.getTitle();
         this.description = base.getDescription();
+
+        LOGGER.info("Create command id={}", this.getId());
     }
 
     /**
@@ -60,7 +61,7 @@ public class CreateCommand {
      * @return Id of this command
      **/
 
-    public int getId() {
+    public TodoIdentifier getId() {
         return id;
     }
 

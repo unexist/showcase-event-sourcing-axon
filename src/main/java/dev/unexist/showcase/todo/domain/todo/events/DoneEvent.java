@@ -11,16 +11,18 @@
 
 package dev.unexist.showcase.todo.domain.todo.events;
 
+import dev.unexist.showcase.todo.domain.todo.TodoIdentifier;
+
 public class DoneEvent {
-    private int id;
+    private TodoIdentifier id;
 
     /**
      * Constructor
      *
-     * @param  id  Id for this event
+     * @param  id  {@link TodoIdentifier} for this event
      **/
 
-    public DoneEvent(int id) {
+    public DoneEvent(TodoIdentifier id) {
         this.id = id;
     }
 
@@ -30,7 +32,7 @@ public class DoneEvent {
      * @return Id of this event
      **/
 
-    public int getId() {
+    public TodoIdentifier getId() {
         return id;
     }
 }

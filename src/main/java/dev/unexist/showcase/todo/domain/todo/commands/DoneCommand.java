@@ -11,19 +11,20 @@
 
 package dev.unexist.showcase.todo.domain.todo.commands;
 
+import dev.unexist.showcase.todo.domain.todo.TodoIdentifier;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 public class DoneCommand {
     @TargetAggregateIdentifier
-    private final int id;
+    private final TodoIdentifier id;
 
     /**
      * Constructor
      *
-     * @param  id  Id for this command
+     * @param  id  {@link TodoIdentifier} for this command
      **/
 
-    public DoneCommand(int id) {
+    public DoneCommand(TodoIdentifier id) {
         this.id = id;
     }
 
@@ -33,7 +34,7 @@ public class DoneCommand {
      * @return Id of this command
      **/
 
-    public int getId() {
+    public TodoIdentifier getId() {
         return id;
     }
 }
