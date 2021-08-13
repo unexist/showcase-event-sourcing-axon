@@ -17,6 +17,7 @@ import dev.unexist.showcase.todo.domain.todo.commands.DoneCommand;
 import dev.unexist.showcase.todo.domain.todo.events.CreatedEvent;
 import dev.unexist.showcase.todo.domain.todo.events.DoneEvent;
 import dev.unexist.showcase.todo.infrastructure.serializer.IdentifierSerializer;
+import org.apache.commons.lang3.Validate;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -113,6 +114,7 @@ public class Todo extends TodoBase {
      **/
 
     public void setId(TodoIdentifier id) {
-        this.id = id;
+        this.id = Validate.notNull(id,
+                "Id must be set");
     }
 }

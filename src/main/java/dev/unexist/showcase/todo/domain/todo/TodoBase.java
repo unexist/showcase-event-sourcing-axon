@@ -11,9 +11,10 @@
 
 package dev.unexist.showcase.todo.domain.todo;
 
+import org.apache.commons.lang3.Validate;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 public class TodoBase {
 
@@ -26,7 +27,7 @@ public class TodoBase {
     private Boolean done;
 
     @NotNull
-    private DueDate dueDate;
+    private TimeWindow timeWindow;
 
     /**
      * Get title of the entry
@@ -45,7 +46,8 @@ public class TodoBase {
      **/
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = Validate.notNull(title,
+                "Title must be set");
     }
 
     /**
@@ -65,7 +67,8 @@ public class TodoBase {
      **/
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = Validate.notNull(description,
+                "Description must be set");
     }
 
     /**
@@ -94,23 +97,18 @@ public class TodoBase {
      * @return Due state of the entry
      **/
 
-    public DueDate getDueDate() {
-        return dueDate;
+    public TimeWindow getTimeWindow() {
+        return timeWindow;
     }
 
     /**
      * Set due date of the entry
      *
-     * @param  dueDate  Due date of the entry
+     * @param  timeWindow  {@link TimeWindow} of the entry
      **/
 
-    public void setDueDate(DueDate dueDate) {
-        Objects.requireNonNull(dueDate, "DueDate cannot be null");
-
-        this.dueDate = dueDate;
-
-        if (null != dueDate.getStart() && null != dueDate.getDue()) {
-            this.done = dueDate.getStart().isBefore(dueDate.getDue());
-        }
+    public void setTimeWindow(TimeWindow timeWindow) {
+        this.timeWindow = Validate.notNull(timeWindow,
+                "TimeWindow must be set");
     }
 }

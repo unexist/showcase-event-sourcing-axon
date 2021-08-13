@@ -32,6 +32,7 @@ public class TodoIdentifier {
      *
      * @param  id  Id for the entry
      **/
+
     protected void setId(final String id) {
         if (null == id) {
             throw new IllegalArgumentException("Missing id");

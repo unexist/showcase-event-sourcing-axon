@@ -41,7 +41,7 @@ public class TodoEventHandler {
 
     @EventHandler
     public void on(CreatedEvent event) {
-        LOGGER.info("Handle event handler created event");
+        LOGGER.info("Handle created event for id={}", event.getId());
 
         Todo todo = new Todo();
 
@@ -60,7 +60,7 @@ public class TodoEventHandler {
 
     @EventHandler
     public void on(DoneEvent event) {
-        LOGGER.info("Handle event handler done event");
+        LOGGER.info("Handle done event for id={}", event.getId());
 
         todos.computeIfPresent(event.getId(), (id, todo) -> {
             todo.setDone(true);
@@ -77,7 +77,7 @@ public class TodoEventHandler {
 
     @QueryHandler
     public List<Todo> handle(FindAllQuery query) {
-        LOGGER.info("Handle event handler find all query");
+        LOGGER.info("Handle find all query");
 
         return new ArrayList<>(todos.values());
     }
@@ -90,7 +90,7 @@ public class TodoEventHandler {
 
     @QueryHandler
     public Optional<Todo> handle(FindByIdQuery query) {
-        LOGGER.info("Handle event handler find by id query");
+        LOGGER.info("Handle find by id query for id={}", query.getId());
 
         return Optional.ofNullable(todos.get(query.getId()));
     }
