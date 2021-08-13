@@ -27,3 +27,9 @@ todo:
 
 list:
 	@curl -X 'GET' 'http://localhost:8080/todo' -H 'accept: */*' | jq .
+
+find:
+	@curl -X 'GET' 'http://localhost:8080/todo/$(ID)' -H 'accept: */*' | jq .
+
+done:
+	@curl -X 'PUT' 'http://localhost:8080/todo/$(ID)/done' -H 'accept: */*' | jq .
